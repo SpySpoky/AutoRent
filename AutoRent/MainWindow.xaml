@@ -1,0 +1,361 @@
+﻿<Window x:Class="TaxiPark.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:AutoRent"
+        mc:Ignorable="d"
+        Title="Администратор" Height="650" Width="1000" MinWidth="1000" MinHeight="650" MaxWidth="1000" MaxHeight="650" Background="White" >
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="327*"/>
+            <ColumnDefinition Width="665*"/>
+        </Grid.ColumnDefinitions>
+        <Grid x:Name="MainGrid" Margin="30,10,30,30" Grid.ColumnSpan="2">
+            <TabControl Margin="0,90,10,0">
+                <TabItem Header="Мототехника" x:Name="mototex" Height="20" VerticalAlignment="Bottom" Margin="-2,0,-17,0" >
+                    <Grid >
+                        <DataGrid AutoGenerateColumns="False" x:Name="MotoTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,133,10,10" IsReadOnly="True" SelectedCellsChanged="MotoTable_SelectedCellsChanged" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Артикул" Binding="{Binding Article_moto}"/>
+                                <DataGridTextColumn Header="Мототехника" Binding="{Binding Name_moto}"/>
+                                <DataGridTextColumn Header="Тип" Binding="{Binding Type_moto}"/>
+                                <DataGridTextColumn Header="Модель" Binding="{Binding Model}"/>
+                                <DataGridTextColumn Header="Производитель" Binding="{Binding Manufacturer}"/>
+                                <DataGridTextColumn Header="Цвет" Binding="{Binding Color}"/>
+                                <DataGridTextColumn Header="Количество(шт)" Binding="{Binding Quantity}"/>
+                                <DataGridTextColumn Header="Цена(руб.коп)" Binding="{Binding Cost}"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Height="128" HorizontalAlignment="Left" VerticalAlignment="Top" Width="926"  >
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="9*"/>
+                                <ColumnDefinition Width="188*"/>
+                                <ColumnDefinition Width="729*"/>
+                            </Grid.ColumnDefinitions>
+                            <Button x:Name="AddMoto" Content="Добавить" HorizontalAlignment="Left" Margin="279,89,0,0" VerticalAlignment="Top" Width="120" Click="AddMoto_Click" Grid.Column="2" Height="29"/>
+                            <Button x:Name="UpdateMoto" Content="Обновить" HorizontalAlignment="Left" Margin="415,89,0,0" VerticalAlignment="Top" Width="120" Click="UpdateMoto_Click" Grid.Column="2" Height="29" />
+                            <Button x:Name="DeleteMoto" Content="Удалить" HorizontalAlignment="Left" Margin="553,89,0,0" VerticalAlignment="Top" Width="120" Click="DeleteMoto_Click" Grid.Column="2" Height="29"/>
+                            <Label x:Name="LBColor" Content="Цвет" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="48,11,0,0" Grid.Column="2" FontWeight="Bold" />
+                            <ComboBox x:Name="CBColor" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="48,36,0,0" ItemsSource="{Binding}" Grid.Column="2" Height="25"/>
+                            <Label x:Name="LBManufacturerCars" Content="Производитель" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="121,66,0,0" Grid.Column="1" Grid.ColumnSpan="2" FontWeight="Bold" />
+                            <ComboBox x:Name="CBManufacturerMoto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="121,93,0,0" Grid.Column="1" Height="25" Grid.ColumnSpan="2" />
+                            <TextBox x:Name="TBQuantity" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="48,93,0,0" Grid.Column="2" Height="25" />
+                            <Label x:Name="LBStatusCars" Content="Количество(шт)" VerticalAlignment="Top" HorizontalAlignment="Left" Margin="48,66,0,0" Grid.Column="2" FontWeight="Bold" Width="120" />
+                            <Label x:Name="LBProductCategory1" Content="Тип" HorizontalAlignment="Left"  VerticalAlignment="Top" Margin="1,66,0,0" Grid.Column="1" Width="131" FontWeight="Bold" />
+                            <ComboBox x:Name="CBType" Width="93" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,93,0,0"  ItemsSource="{Binding}" Grid.Column="1" Height="25"/>
+                            <Label x:Name="LBUnit" Content="Модель" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="121,11,0,0" Grid.Column="1" Height="24" Width="130" Grid.ColumnSpan="2" FontWeight="Bold" />
+                            <ComboBox x:Name="CBModel" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="121,35,0,0" Grid.Column="1" Height="25" Grid.ColumnSpan="2"/>
+
+                            <Label  Content="Артикул" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="279,11,0,0" Grid.Column="2" Width="91" FontWeight="Bold" />
+                            <TextBox x:Name="TBArticle"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="279,35,0,0" Height="25" Grid.Column="2" />
+                            <Label x:Name="LBName" Content="Мототехника" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,11,0,0" Width="91" Grid.Column="1" FontWeight="Bold" />
+                            <TextBox x:Name="TBMoto"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="0,36,0,0" Height="25" Grid.Column="1" />
+                            <Label x:Name="LBPrice"  HorizontalAlignment="Left" VerticalAlignment="Top" Content="Цена(руб.коп)" Margin="168,11,0,0" Grid.Column="2" FontWeight="Bold" />
+                            <TextBox x:Name="TBCost" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="168,36,0,0" Height="25" Grid.Column="2" PreviewTextInput="PriceTB_PreviewTextInput"/>
+                            <Label  Content="Статус" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="168,66,0,0" Grid.Column="2" Height="24" Width="93" FontWeight="Bold" />
+                            <ComboBox x:Name="CBStatusMoto" HorizontalAlignment="Left" VerticalAlignment="Top" Width="93" Margin="168,93,0,0" Grid.Column="2" Height="25" />
+                            <TextBox x:Name="PoiskMoto" HorizontalAlignment="Left" Height="24" Margin="426,36,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" Grid.Column="2" TextChanged="PoiskMoto_TextChanged"/>
+                            <Label Content="Поиск" HorizontalAlignment="Left" Margin="443,11,0,0" VerticalAlignment="Top" Grid.Column="2" FontWeight="Bold"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+                <TabItem Header="Тип мототехники" Visibility="Hidden" x:Name="Type" Margin="-2,0,-95,0" RenderTransformOrigin="0.509,0.5">
+                    <Grid>
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="11*"/>
+                            <ColumnDefinition Width="452*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid AutoGenerateColumns="False" x:Name="TypeTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,169,10,10" IsReadOnly="True"  Grid.ColumnSpan="2" SelectionChanged="TypeTable_SelectionChanged" FontSize="14" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Тип мототехники" Binding="{Binding Name_type}"/>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Grid Margin="10,10,10,256" Grid.ColumnSpan="2">
+
+                            <Label x:Name="LBCars" Content="Тип мототехники" VerticalAlignment="Top" HorizontalAlignment="Left" Width="108" FontWeight="Bold" />
+                            <TextBox x:Name="TBType" Width="105" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="3,29,0,0" />
+                            <Button x:Name="AddType" Content="Добавить" HorizontalAlignment="Left" Margin="0,115,0,0" VerticalAlignment="Top" Width="120"  Height="29" Click="AddType_Click"/>
+                            <Button x:Name="UpdateType" Content="Обновить" HorizontalAlignment="Left" Margin="144,115,0,0" VerticalAlignment="Top" Width="120"  Height="29" Click="UpdateType_Click"/>
+                            <Label Content="Поиск" HorizontalAlignment="Left" Margin="144,0,0,0" VerticalAlignment="Top" FontWeight="Bold"/>
+                            <TextBox HorizontalAlignment="Left" Height="25" Margin="144,29,0,0" TextWrapping="Wrap" x:Name="PoiskType" VerticalAlignment="Top" Width="120" TextChanged="PoiskType_TextChanged"/>
+                        </Grid>
+                    </Grid>
+                </TabItem>
+
+                <TabItem  Header="Клиенты" Margin="-95,0,55,0" RenderTransformOrigin="0.5,0.5">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="419*"/>
+                            <ColumnDefinition Width="44*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LBSurname" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Фамилия" Margin="1,75,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBNameClients" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Имя" Margin="147,15,0,0" Width="129" RenderTransformOrigin="0.504,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBMiddlename" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Отчество" Margin="147,75,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBPhone" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Телефон" Margin="1,15,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBEmail" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Почта" Margin="292,15,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBSurname"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="0,101,0,0" Height="25" />
+                        <TextBox x:Name="TBNameClients"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="146,41,0,0" Height="25" />
+                        <TextBox x:Name="TBMiddlename"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="146,101,0,0" Height="25" />
+                        <TextBox x:Name="TBPhone" MaxLength="16" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="0,41,0,0" Height="25" PreviewTextInput="TBPhone_PreviewTextInput" KeyDown="TBPhone_KeyDown" />
+                        <TextBox x:Name="TBEmail"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="292,41,0,0" Height="25" />
+                        <Label x:Name="LBStatusClients" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Статус" Margin="441,15,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBGenderClients" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Пол" Margin="292,75,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <ComboBox x:Name="CBGenderClients" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="292,101,0,0" Height="25"/>
+                        <ComboBox x:Name="CBStatusClients" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="441,41,0,0" Height="25"/>
+                        <Button x:Name="AddClients" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="450,97,0,0" Click="AddClients_Click" Width="120" Height="29" />
+                        <Button x:Name="UpdateClients" Content="Обновить" HorizontalAlignment="Left" Margin="592,97,0,0" VerticalAlignment="Top" Width="120" Click="UpdateClients_Click" Height="29" />
+                        <Button x:Name="DeleteClients" Content="Удалить" HorizontalAlignment="Left" Margin="735,97,0,0" VerticalAlignment="Top" Width="120" Click="DeleteClients_Click" Height="29" Grid.ColumnSpan="2"/>
+                        <DataGrid AutoGenerateColumns="False" x:Name="ClientsTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="ClientsTable_SelectedCellsChanged" Grid.ColumnSpan="2" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер телефона" Binding="{Binding Phone_number}"/>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding Lastname}"/>
+                                <DataGridTextColumn Header="Почта" Binding="{Binding Email}"/>
+                                <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="633,15,0,0" VerticalAlignment="Top" FontWeight="Bold" Width="52"/>
+                        <TextBox x:Name="PoiskClients" HorizontalAlignment="Left" Height="25" Margin="633,41,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="120" TextChanged="PoiskClients_TextChanged"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Цвет" Visibility="Hidden" x:Name="ColorsHead">
+                    <Grid>
+
+                        <Label x:Name="LBColors" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Цвет" Width="129" RenderTransformOrigin="0.5,0.5" Margin="10,10,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="TBColors"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,34,0,0" Height="25" />
+                        <Button x:Name="AddColors" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,109,0,0" Click="AddColors_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateColors" Content="Обновить" HorizontalAlignment="Left" Margin="157,109,0,0" VerticalAlignment="Top" Width="129" Click="UpdateColors_Click" Height="29" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="ColorsTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="ColorsTable_SelectedCellsChanged" FontSize="14" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Цвет" Binding="{Binding Name_color}"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox HorizontalAlignment="Left" Height="25" Margin="175,34,0,0" TextWrapping="Wrap" x:Name="PoiskColors" VerticalAlignment="Top" Width="130" TextChanged="PoiskColors_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="175,10,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Пол" Visibility="Hidden" x:Name="Pol" Margin="0,1,-4,0">
+                    <Grid>
+                        <Label  HorizontalAlignment="Left" VerticalAlignment="Top" Content="Поиск" Width="129" RenderTransformOrigin="0.5,0.5" Margin="160,10,0,0" FontWeight="Bold"/>
+                        <TextBox  x:Name="PoiskGender" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="159,34,0,0" Height="25" />
+                        <Label x:Name="LBGender1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Пол" Width="129" RenderTransformOrigin="0.5,0.5" Margin="11,10,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="TBGender1"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,34,0,0" Height="25" />
+                        <Button x:Name="AddGender" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,107,0,0" Click="AddGender_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateGender" Content="Обновить" HorizontalAlignment="Left" Margin="160,107,0,0" VerticalAlignment="Top" Width="129" Click="UpdateGender_Click" Height="29" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="GenderTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True"  SelectionChanged="GenderTable_SelectionChanged" FontSize="14" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Пол" Binding="{Binding Name_gender}"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Страны" Visibility="Hidden" x:Name ="Country">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="267*"/>
+                            <ColumnDefinition Width="196*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LBCountry" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Страна" Margin="10,0,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBCountry"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,24,0,0" Height="25" />
+                        <Button x:Name="AddCountry" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,110,0,0" Click="AddCountry_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateCountry" Content="Обновить" HorizontalAlignment="Left" Margin="158,110,0,0" VerticalAlignment="Top" Width="130" Click="UpdateCountry_Click" Height="29" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="CountryTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" Grid.ColumnSpan="2" SelectedCellsChanged="CountryTable_SelectedCellsChanged" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Страна" Binding="{Binding Name_country}"/>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="PoiskCountry" HorizontalAlignment="Left" Height="23" Margin="158,26,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="130" TextChanged="PoiskCountry_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="158,0,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Производители" Margin="-181,0,170,0">
+                    <Grid>
+                        <Label x:Name="LBCountryManufacturer" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Страна производителя" Margin="156,0,0,0" Width="145" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBManufacturer" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Производитель" Margin="10,0,0,0" Width="129" RenderTransformOrigin="-3.589,0" FontWeight="Bold"/>
+                        <TextBox x:Name="TBManufacturer"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,29,0,0" Height="25" />
+                        <Button x:Name="AddManufacturer" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,96,0,0" Click="AddManufacturer_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateManufacturer" Content="Обновить" HorizontalAlignment="Left" Margin="157,96,0,0" VerticalAlignment="Top" Width="130" Click="UpdateManufacturer_Click" Height="29" />
+                        <ComboBox x:Name="CBManufacturer" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="156,29,0,0" Height="25"/>
+                        <DataGrid AutoGenerateColumns="False" x:Name="ManufacturerTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="ManufacturerTable_SelectedCellsChanged" FontSize="14" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Производитель" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Страна" Binding="{Binding Country}"/>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="TBPoisk"  HorizontalAlignment="Left" Height="25" Margin="341,29,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="129" TextChanged="TBPoisk_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="341,0,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Статусы" Visibility="Hidden" x:Name="Status" Margin="-2,0,32,0">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="366*"/>
+                            <ColumnDefinition Width="97*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LBOrderStatus1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Статус " Margin="10,0,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBStatus"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,29,0,0" Height="25" />
+                        <Button x:Name="AddStatus" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,110,0,0" Click="AddStatus_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateStatus" Content="Обновить" HorizontalAlignment="Left" Margin="158,110,0,0" VerticalAlignment="Top" Width="130" Click="UpdateStatus_Click" Height="29" RenderTransformOrigin="0.5,0.417" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="StatusTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" Grid.ColumnSpan="2" SelectedCellsChanged="StatusTable_SelectedCellsChanged" FontSize="14" >
+                            <DataGrid.Columns>
+
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Name_status}"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox HorizontalAlignment="Left" Height="23" Margin="168,31,0,0" TextWrapping="Wrap" x:Name="PoiskStatus" VerticalAlignment="Top" Width="130" TextChanged="PoiskStatus_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="168,0,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Модели мототехники" Visibility="Hidden" x:Name="Model" Margin="-2,-2,80,0">
+                    <Grid>
+                        <Label x:Name="LBModel" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Модель" Margin="10,0,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBModel"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,29,0,0" Height="25" />
+                        <Button x:Name="AddModel" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,99,0,0" Click="AddModel_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateModel" Content="Обновить" HorizontalAlignment="Left" Margin="160,99,0,0" VerticalAlignment="Top" Width="130" Click="UpdateModel_Click" Height="29" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="ModelTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="ModelTable_SelectedCellsChanged" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Модель" Binding="{Binding Name_model}"/>
+
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox HorizontalAlignment="Left" Margin="160,31,0,407" TextWrapping="Wrap" x:Name="PoiskModel" Width="130" TextChanged="PoiskModel_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Роли" Visibility="Hidden" x:Name="Role">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="748*"/>
+                            <ColumnDefinition Width="39*"/>
+                            <ColumnDefinition Width="139*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LBRole" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Роль" Margin="10,0,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBRole"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,24,0,0" Height="25" />
+                        <Button x:Name="AddRole" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,106,0,0" Click="AddRole_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateRole" Content="Обновить" HorizontalAlignment="Left" Margin="157,106,0,0" VerticalAlignment="Top" Width="130" Click="UpdateRole_Click" Height="29" />
+                        <DataGrid AutoGenerateColumns="False" x:Name="RoleTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="RoleTable_SelectedCellsChanged" Grid.ColumnSpan="3" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Роль" Binding="{Binding Name_role}"/>
+
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox HorizontalAlignment="Left" Height="25" Margin="157,24,0,0" TextWrapping="Wrap" x:Name="PoiskRole" VerticalAlignment="Top" Width="130" TextChanged="PoiskRole_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="157,0,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Продажи" Margin="-395,0,339,-1">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="342*"/>
+                            <ColumnDefinition Width="121*"/>
+                        </Grid.ColumnDefinitions>
+                        <DataGrid AutoGenerateColumns="False" x:Name="OrdersTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="0,122,0,10" IsReadOnly="True" Grid.ColumnSpan="2" FontSize="14" >
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Номер заказа" Binding="{Binding id_Sales}"/>
+                                <DataGridTextColumn Header="Работник" Binding="{Binding Workers}"/>
+                                <DataGridTextColumn Header="Клиент" Binding="{Binding Clients}"/>
+                                <DataGridTextColumn Header="Артикул мототехники" Binding="{Binding Moto}"/>
+                                <DataGridTextColumn Header="Количество(шт)" Binding="{Binding Quantity}"/>
+                                <DataGridTextColumn Header="Цена(руб.коп)" Binding="{Binding Cost}"/>
+                                <DataGridTextColumn Header="Тип оплаты" Binding="{Binding Payment_type}"/>
+                                <DataGridTextColumn Header="Итоговая цена(руб.коп)" Binding="{Binding Final_price}"/>
+                                <DataGridTextColumn Header="Дата" Binding="{Binding Date,StringFormat='dd.MM.yyyy'}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="PoiskOrders" HorizontalAlignment="Left" Height="28" Margin="0,34,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextChanged="PoiskOrders_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Тип оплаты" Visibility="Hidden" x:Name="Payment">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="377*"/>
+                            <ColumnDefinition Width="549*"/>
+                        </Grid.ColumnDefinitions>
+                        <Label x:Name="LBUnit1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Тип оплаты" Width="129" RenderTransformOrigin="0.5,0.5" Margin="10,0,0,0" FontWeight="Bold"/>
+                        <TextBox x:Name="TBType_payment"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,24,0,0" Height="25" />
+                        <Button x:Name="AddType_payment" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,108,0,0" Click="AddType_payment_Click" Width="130" Height="29" />
+                        <Button x:Name="UpdateType_payment" Content="Обновить" HorizontalAlignment="Left" Margin="160,108,0,0" VerticalAlignment="Top" Width="130" Click="UpdateType_payment_Click" Height="29" />
+                        <DataGrid  AutoGenerateColumns="False" x:Name="Type_paymentTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="Type_paymentTable_SelectedCellsChanged" Grid.ColumnSpan="2" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Тип оплаты" Binding="{Binding Payment_type}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox HorizontalAlignment="Left" Height="25" Margin="160,24,0,0" TextWrapping="Wrap" x:Name="PoiskPayment" VerticalAlignment="Top" Width="130" TextChanged="PoiskPayment_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="160,0,0,0" VerticalAlignment="Top" Width="130" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+                <TabItem  Header="Работники" Margin="-414,0,370,0">
+                    <Grid>
+                        <Label x:Name="LBSurname1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Фамилия" Width="129" RenderTransformOrigin="0.5,0.5" Margin="187,7,0,0" FontWeight="Bold"/>
+                        <Label x:Name="LBName1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Имя" Margin="187,56,0,0" Width="129" RenderTransformOrigin="0.488,0.458" FontWeight="Bold"/>
+                        <Label x:Name="LBMiddlename1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Отчество" Margin="344,7,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBGender" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Пол" Margin="492,7,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBLogin" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Логин" Width="129" RenderTransformOrigin="0.5,0.5" Margin="11,7,0,0" FontWeight="Bold"/>
+                        <Label x:Name="LBPassword" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Пароль" Margin="11,56,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <Label x:Name="LBRole1" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Роль" Margin="344,56,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <TextBox x:Name="TBSurname1"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" Margin="187,26,0,0" Height="25" />
+                        <TextBox x:Name="TBName1"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="186,76,0,0" Height="25" />
+                        <TextBox x:Name="TBMiddlename1"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="344,26,0,0" Height="25" />
+                        <ComboBox x:Name="CBGender1" HorizontalAlignment="Left" VerticalAlignment="Top" Width="131" Margin="492,26,0,0" Height="25"/>
+                        <TextBox x:Name="TBLogin"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,26,0,0" Height="25" />
+                        <TextBox x:Name="TBPassword"  HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="10,76,0,0" Height="25" />
+                        <ComboBox x:Name="CBRole" HorizontalAlignment="Left" VerticalAlignment="Top" Width="130" Margin="345,76,0,0" Height="25"/>
+                        <Label x:Name="LBStatusWorkers" HorizontalAlignment="Left" VerticalAlignment="Top" Content="Статус" Margin="494,56,0,0" Width="129" RenderTransformOrigin="0.5,0.5" FontWeight="Bold"/>
+                        <ComboBox x:Name="CBStatusWorkers" HorizontalAlignment="Left" VerticalAlignment="Top" Width="129" Margin="494,76,0,0" Height="25" RenderTransformOrigin="0.901,-0.32"/>
+                        <Button x:Name="AddWorkers"  HorizontalAlignment="Left" VerticalAlignment="Top" Content="Добавить" Margin="10,120,0,0" Click="AddWorkers_Click" Width="130" Height="29" />
+
+                        <Button x:Name="UpdateWorkers" Content="Обновить" HorizontalAlignment="Left" Margin="170,120,0,0" VerticalAlignment="Top" Width="130" Click="UpdateWorkers_Click" Height="29" />
+                        <Button x:Name="DeleteWorkers" Content="Удалить" HorizontalAlignment="Left" Margin="331,120,0,0" VerticalAlignment="Top" Width="130" Click="DeleteWorkers_Click" Height="29"/>
+                        <DataGrid AutoGenerateColumns="False"  x:Name="WorkersTable" ItemsSource="{Binding}" Background="#FFFEFFE2" Margin="10,154,10,10" IsReadOnly="True" SelectedCellsChanged="WorkersTable_SelectedCellsChanged" FontSize="14">
+                            <DataGrid.Columns>
+                                <DataGridTextColumn Header="Логин" Binding="{Binding Login}"/>
+                                <DataGridTextColumn Header="Пароль" Binding="{Binding Password}"/>
+                                <DataGridTextColumn Header="Фамилия" Binding="{Binding Surname}"/>
+                                <DataGridTextColumn Header="Имя" Binding="{Binding Name}"/>
+                                <DataGridTextColumn Header="Отчество" Binding="{Binding Lastname}"/>
+                                <DataGridTextColumn Header="Роль" Binding="{Binding Role}"/>
+                                <DataGridTextColumn Header="Пол" Binding="{Binding Gender}"/>
+                                <DataGridTextColumn Header="Статус" Binding="{Binding Status}"/>
+                            </DataGrid.Columns>
+                        </DataGrid>
+                        <TextBox x:Name="PoiskWorkers" HorizontalAlignment="Left" Height="25" Margin="666,26,0,0" TextWrapping="Wrap"  VerticalAlignment="Top" Width="120" TextChanged="PoiskWorkers_TextChanged"/>
+                        <Label Content="Поиск" HorizontalAlignment="Left" Margin="666,7,0,0" VerticalAlignment="Top" Width="120" FontWeight="Bold"/>
+                    </Grid>
+                </TabItem>
+
+            </TabControl>
+            <Label Content="Администратор"  HorizontalAlignment="Center" Margin="324,26,331,0" VerticalAlignment="Top" Width="277" FontSize="30" FontWeight="Bold" Foreground="#FF0F0101"/>
+            <Menu HorizontalAlignment="Left" Height="22" Margin="537,90,0,0" VerticalAlignment="Top" Width="170">
+                <MenuItem Header="Справочники" FontSize="13" RenderTransformOrigin="0.496,0.625" FontFamily="Segoe UI" BorderBrush="Black" Height="23" Width="232">
+                    <MenuItem Header="Тип мототехники" Margin="0,0,0,0" Click="MenuItem_Click_7"/>
+                    <MenuItem Header="Цвет" Click="MenuItem_Click"/>
+                    <MenuItem Header="Пол" Click="MenuItem_Click_1"/>
+                    <MenuItem Header="Страны" Click="MenuItem_Click_2"/>
+                    <MenuItem Header="Статусы" Click="MenuItem_Click_3"/>
+                    <MenuItem Header="Модели мототехники" Click="MenuItem_Click_4"/>
+                    <MenuItem Header="Роли" Click="MenuItem_Click_5"/>
+                    <MenuItem Header="Тип оплаты" Click="MenuItem_Click_6"/>
+
+                </MenuItem>
+            </Menu>
+        </Grid>
+        <Button Content="Выход" HorizontalAlignment="Left" Margin="30,580,0,0" VerticalAlignment="Top" Width="128" Height="29" Click="Button_Click"/>
+        <Image Margin="10,-38,144,517" Source="Dooble_briliant-removebg-preview.png" Stretch="Fill"/>
+    </Grid>
+</Window>

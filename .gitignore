@@ -1,0 +1,10 @@
+# Visual Studio
+.vs/
+bin/
+obj/
+*.user
+*.suo
+*.userprefs
+
+# NuGet packages (restored automatically by Visual Studio)
+packages/
